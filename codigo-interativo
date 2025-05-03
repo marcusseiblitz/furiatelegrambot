@@ -228,7 +228,7 @@ def main():
     webhook_url="https://<seiblitz>.pythonanywhere.com/<7919229005:AAHMx5VfoXpIciCMxYwEFaZgXq6J29kbbI4>/"
 )
 
-from bot import application  # Assumindo que seu bot esteja no arquivo bot.py
+from bot import application 
 
 # WSGI callable
 app = application
