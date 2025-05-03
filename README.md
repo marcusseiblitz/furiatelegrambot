@@ -71,7 +71,8 @@ Para usar o bot como fã da FURIA CS:
 ## 🛠️  Manutenção no Python Anywhere
 
 Lembrando que por se tratar de um host gratuito, o software pode apresentar interrupções na hostagem por **limitações impostas em contas gratuitas.**
-Por isso, caso ocorra, será necessário acessar o console bash e executar o comando interativo do bot.
+Por isso, caso ocorra, será necessário acessar https://www.pythonanywhere.com. No console bash, executar o comando interativo do bot que está disponível neste repositório e dar Run no
+código para que a hostagem reinicie.
 
 ## 🎯 Contato
 Desenvolvido por Marcus Seiblitz 🚀
