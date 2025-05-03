@@ -1,0 +1,239 @@
+import logging
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.ext import ApplicationBuilder, CommandHandler, CallbackQueryHandler, ContextTypes, MessageHandler, filters
+
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
+
+TOKEN = "7919229005:AAHMx5VfoXpIciCMxYwEFaZgXq6J29kbbI4"
+
+
+# /start
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user = update.effective_user
+    await update.message.reply_html(
+        f"Olá, {user.mention_html()}! Bem-vindo ao bot oficial para fãs da FURIA CS! 🖤🤍\n\n"
+        "O que você gostaria de saber hoje?\n"
+        "Use /ajuda para ver todos os comandos disponíveis."
+    )
+
+
+# /ajuda
+async def ajuda(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text(
+        "Aqui estão os comandos que você pode usar:\n\n"
+        "/agenda - Próximos jogos da FURIA\n"
+        "/resultados - Resultados recentes\n"
+        "/jogadores - Informações sobre o elenco atual\n"
+        "/noticias - Últimas notícias do time\n"
+        "/estatisticas - Estatísticas do time e jogadores\n"
+        "/loja - Link para a loja oficial\n"
+        "/lembrete - Configurar lembretes de jogos"
+    )
+
+
+# /agenda
+async def agenda(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text(
+        "📅 *PRÓXIMOS JOGOS DA FURIA*\n\n"
+        "• 28/04 - FURIA vs Team Liquid - ESL Pro League\n"
+        "• 30/04 - FURIA vs NAVI - ESL Pro League\n"
+        "• 03/05 - FURIA vs MIBR - BLAST Premier\n\n"
+        "Quer receber lembretes antes dos jogos? Use /lembrete",
+        parse_mode='Markdown'
+    )
+
+
+# /resultados
+async def resultados(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text(
+        "🏆 *RESULTADOS RECENTES*\n\n"
+        "• 07/04 - FURIA 1-2 Complexity (PGL Bucharest 2025)\n"
+        "• 08/04 - FURIA 2-0 Virtus Pro (PGL Bucharest 2025)\n"
+        "• 09/04 - FURIA 2-0 The MongolZ (PGL Bucharest 2025)\n",
+        parse_mode='Markdown'
+    )
+
+
+# /jogadores
+async def jogadores(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    keyboard = [
+        [InlineKeyboardButton("⭐ KSCERATO", callback_data='jogador_kscerato')],
+        [InlineKeyboardButton("👑 yuurih", callback_data='jogador_yuurih')],
+        [InlineKeyboardButton("🔥 molodoy", callback_data='jogador_molodoy')],
+        [InlineKeyboardButton("🎯 FalleN", callback_data='jogador_FalleN')],
+        [InlineKeyboardButton("💪 YEKINDAR", callback_data='jogador_yekindar')]
+    ]
+
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    await update.message.reply_text("Escolha um jogador para ver mais informações:", reply_markup=reply_markup)
+
+
+# callback jogadores
+async def info_jogador(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    query = update.callback_query
+    await query.answer()
+
+    if query.data == 'jogador_kscerato':
+        await query.edit_message_text(
+            "*KSCERATO (Kaike Cerato)*\n\n"
+            "Função: Rifler\n"
+            "Idade: 25 anos\n"
+            "Rating 2.0 (2024): 1.20\n"
+            "Nacionalidade: Brasil 🇧🇷\n\n"
+            "Um dos melhores jogadores do Brasil, conhecido por seu aim preciso e jogadas consistentes.",
+            parse_mode='Markdown'
+        )
+    elif query.data == 'jogador_yuurih':
+        await query.edit_message_text(
+            "*yuurih (Yuri Santos)*\n\n"
+            "Função: Rifler/Lurker\n"
+            "Idade: 25 anos\n"
+            "Rating 2.0 (2024): 1.18\n"
+            "Nacionalidade: Brasil 🇧🇷\n\n"
+            "Conhecido por seu jogo inteligente e capacidade de clutch.",
+            parse_mode='Markdown'
+        )
+    elif query.data == 'jogador_molodoy':
+        await query.edit_message_text(
+            "*molodoy (Danil Golubenko)*\n\n"
+            "Função: Entry Fragger\n"
+            "Idade: 20 anos\n"
+            "Rating 2.0 (2024): 1.10\n"
+            "Nacionalidade: Cazaquistão\n\n"
+            "Conhecido por seu estilo único de liderança e entradas.",
+            parse_mode='Markdown'
+        )
+    elif query.data == 'jogador_FalleN':
+        await query.edit_message_text(
+            "*FalleN (Gabriel Toledo)*\n\n"
+            "Função: IGL/AWPer\n"
+            "Idade: 33 anos\n"
+            "Rating 2.0 (2024): 1.15\n"
+            "Nacionalidade: Brasil 🇧🇷\n\n"
+            "O sniper principal do time, conhecido por seus reflexos rápidos e tiros precisos.",
+            parse_mode='Markdown'
+        )
+    elif query.data == 'jogador_yekindar':
+        await query.edit_message_text(
+            "*YEKINDAR (Mareks Gaļinskis)*\n\n"
+            "Função: Support/Rifler\n"
+            "Idade: 25 anos\n"
+            "Rating 2.0 (2024): 1.05\n"
+            "Nacionalidade: Letônia\n\n"
+            "Jogador suporte que desempenha múltiplos papéis na equipe.",
+            parse_mode='Markdown'
+        )
+
+
+# /noticias
+async def noticias(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text(
+        "📰 *ÚLTIMAS NOTÍCIAS DA FURIA CS*\n\n"
+        "• FURIA se classifica para as finais da ESL Pro League\n"
+        "• Time prepara bootcamp na Europa para o próximo Major\n"
+        "• Em entrevista, FalleN fala sobre estratégias para próximos campeonatos\n\n"
+        "Para mais notícias, visite: https://x.com/FURIA",
+        parse_mode='Markdown'
+    )
+
+
+# /loja
+async def loja(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text(
+        "🛒 *LOJA OFICIAL DA FURIA*\n\n"
+        "Visite nossa loja oficial para comprar camisetas, moletons e outros produtos exclusivos da FURIA:\n"
+        "https://furia.gg",
+        parse_mode='Markdown'
+    )
+
+
+# /estatisticas
+async def estatisticas(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text(
+        "📊 *ESTATÍSTICAS DA FURIA CS*\n\n"
+        "• Posição no ranking mundial: #8\n"
+        "• Vitórias em 2024: 67%\n"
+        "• Mapas mais fortes: Mirage (75% win rate), Nuke (70% win rate)\n"
+        "• Jogador com mais MVP: KSCERATO (12)\n\n"
+        "Para estatísticas detalhadas, visite HLTV.org",
+        parse_mode='Markdown'
+    )
+
+
+# /lembrete
+async def configurar_lembrete(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    keyboard = [
+        [InlineKeyboardButton("Sim, quero receber lembretes", callback_data='lembrete_sim')],
+        [InlineKeyboardButton("Não, obrigado", callback_data='lembrete_nao')]
+    ]
+
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    await update.message.reply_text(
+        "Você gostaria de receber lembretes antes dos jogos da FURIA?",
+        reply_markup=reply_markup
+    )
+
+
+# callback lembretes
+async def processar_lembrete(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    query = update.callback_query
+    await query.answer()
+
+    if query.data == 'lembrete_sim':
+        chat_id = query.message.chat_id
+        await query.edit_message_text(
+            "✅ Perfeito! Você receberá lembretes 1 hora antes de cada jogo da FURIA.\n"
+            "Para cancelar este serviço, use /cancelar_lembrete"
+        )
+    else:
+        await query.edit_message_text("Ok! Se mudar de ideia, use o comando /lembrete")
+
+
+# mensagens de texto não reconhecidas
+async def responder_mensagem(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    texto = update.message.text.lower()
+
+    if "oi" in texto or "olá" in texto:
+        await update.message.reply_text("Olá, jogador! Como posso te ajudar hoje? Use /ajuda para ver os comandos disponíveis.")
+    elif "horário" in texto or "quando" in texto or "jogo" in texto:
+        await agenda(update, context)
+    elif "jogador" in texto or "elenco" in texto or "time" in texto:
+        await update.message.reply_text("Para informações sobre o elenco atual, use o comando /jogadores")
+    else:
+        await update.message.reply_text("Não entendi o que você quer. Use /ajuda para ver os comandos disponíveis.")
+
+
+def main():
+    application = ApplicationBuilder().token(TOKEN).build()
+
+    application.add_handler(CommandHandler("start", start))
+    application.add_handler(CommandHandler("ajuda", ajuda))
+    application.add_handler(CommandHandler("agenda", agenda))
+    application.add_handler(CommandHandler("resultados", resultados))
+    application.add_handler(CommandHandler("jogadores", jogadores))
+    application.add_handler(CommandHandler("noticias", noticias))
+    application.add_handler(CommandHandler("loja", loja))
+    application.add_handler(CommandHandler("estatisticas", estatisticas))
+    application.add_handler(CommandHandler("lembrete", configurar_lembrete))
+
+    application.add_handler(CallbackQueryHandler(info_jogador, pattern='^jogador_'))
+    application.add_handler(CallbackQueryHandler(processar_lembrete, pattern='^lembrete_'))
+
+    application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, responder_mensagem))
+
+    print("Bot iniciado!")
+    application.run_webhook(
+    listen="0.0.0.0",
+    port=443,
+    webhook_url="https://<seiblitz>.pythonanywhere.com/<7919229005:AAHMx5VfoXpIciCMxYwEFaZgXq6J29kbbI4>/"
+)
+
+from bot import application  # Assumindo que seu bot esteja no arquivo bot.py
+
+# WSGI callable
+app = application
+
+
+
+if __name__ == "__main__":
+    main()
