@@ -68,6 +68,12 @@ Para usar o bot como fã da FURIA CS:
 
 ---
 
+## ▶️ Vídeo apresentativo
+
+Segue o link para o curto vídeo no qual apresenta as funcionalidades do bot e explica um pouco mais sobre ele: https://www.youtube.com/watch?v=MfjFM7y-usI
+
+---
+
 ## 🛠️  Manutenção no Python Anywhere
 
 Lembrando que por se tratar de um host gratuito, o software pode apresentar interrupções na hostagem por **limitações impostas em contas gratuitas.**
