@@ -222,17 +222,7 @@ def main():
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, responder_mensagem))
 
     print("Bot iniciado!")
-    application.run_webhook(
-    listen="0.0.0.0",
-    port=443,
-    webhook_url="https://<seiblitz>.pythonanywhere.com/<7919229005:AAHMx5VfoXpIciCMxYwEFaZgXq6J29kbbI4>/"
-)
-
-from bot import application 
-
-# WSGI callable
-app = application
-
+    application.run_polling()
 
 
 if __name__ == "__main__":
